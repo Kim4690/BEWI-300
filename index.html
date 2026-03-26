@@ -83,15 +83,10 @@ loader.addEventListener("complete", function(){
 
   stage.addChild(exportRoot);
 
-  // 🔥 KRITISK
   createjs.Ticker.framerate = lib.properties.fps;
   createjs.Ticker.addEventListener("tick", stage);
 
-  // 🔥 FORCE PLAY
-  exportRoot.gotoAndPlay(0);
-
-  // (valgfri men god)
-  stage.enableMouseOver();
+  // ❌ INGEN gotoAndPlay (den crasher hos dig)
 
   canvas.addEventListener("click", function(){
     window.open(
@@ -101,7 +96,6 @@ loader.addEventListener("complete", function(){
   });
 
 });
-
   loader.loadManifest(lib.properties.manifest);
 }
 
