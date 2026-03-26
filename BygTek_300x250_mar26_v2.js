@@ -1,126 +1,140 @@
-(function (cjs, an) {
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
 
-var p;
-var lib = {};
-var ss = window.ss = window.ss || {};
-var img = {};
+<style>
+body { margin:0; }
 
-	an.bootcompsLoaded = an.bootcompsLoaded || [];
-an.bootstrapListeners = an.bootstrapListeners || [];
-
-an.bootstrapCallback = function(fnCallback) {
-	an.bootstrapListeners.push(fnCallback);
-	if (an.bootcompsLoaded.length > 0) {
-		for (var i = 0; i < an.bootcompsLoaded.length; ++i) {
-			fnCallback(an.bootcompsLoaded[i]);
-		}
-	}
-};
-
-an.compositionLoaded = function(id) {
-	an.bootcompsLoaded.push(id);
-	for (var j = 0; j < an.bootstrapListeners.length; j++) {
-		an.bootstrapListeners[j](id);
-	}
-};
-	
-lib.ssMetadata = [
-	{name:"BygTek_300x250_mar26_atlas_1", frames: [[0,1335,490,192],[492,1335,472,96],[966,1335,162,42],[1130,1335,151,42],[1283,1335,108,34],[0,0,2000,1333]]}
-];
-
-// 🔧 MovieClip base
-(lib.AnMovieClip = function(){
-	this.actionFrames = [];
-	this.ignorePause = false;
-}).prototype = p = new cjs.MovieClip();
-
-// 🔧 Sprites
-(lib.CachedBmp_5 = function() { this.initialize(ss["BygTek_300x250_mar26_atlas_1"]); this.gotoAndStop(0); }).prototype = p = new cjs.Sprite();
-(lib.CachedBmp_4 = function() { this.initialize(ss["BygTek_300x250_mar26_atlas_1"]); this.gotoAndStop(1); }).prototype = p = new cjs.Sprite();
-(lib.CachedBmp_2 = function() { this.initialize(ss["BygTek_300x250_mar26_atlas_1"]); this.gotoAndStop(2); }).prototype = p = new cjs.Sprite();
-(lib.CachedBmp_1 = function() { this.initialize(ss["BygTek_300x250_mar26_atlas_1"]); this.gotoAndStop(3); }).prototype = p = new cjs.Sprite();
-(lib.CachedBmp_3 = function() { this.initialize(ss["BygTek_300x250_mar26_atlas_1"]); this.gotoAndStop(4); }).prototype = p = new cjs.Sprite();
-(lib.LinkedFile = function() { this.initialize(ss["BygTek_300x250_mar26_atlas_1"]); this.gotoAndStop(5); }).prototype = p = new cjs.Sprite();
-
-// 🔧 helper
-function mc_symbol_clone() {
-	var clone = this._cloneProps(new this.constructor(this.mode, this.startPosition, this.loop));
-	clone.gotoAndStop(this.currentFrame);
-	return clone;
-}
-function getMCSymbolPrototype(symbol, nominalBounds) {
-	var prototype = cjs.extend(symbol, cjs.MovieClip);
-	prototype.clone = mc_symbol_clone;
-	prototype.nominalBounds = nominalBounds;
-	return prototype;
+#banner {
+  width:300px;
+  height:250px;
+  position:relative;
+  overflow:hidden;
+  font-family: Arial, sans-serif;
+  cursor:pointer;
+  background:#000;
 }
 
-// 🔧 Text + CTA (beholdt)
-(lib.text2 = function() {
-	cjs.MovieClip.apply(this,[{}]);
-	this.instance = new lib.CachedBmp_5();
-	this.instance.setTransform(0,0,0.5,0.5);
-	this.timeline.addTween(cjs.Tween.get(this.instance).wait(300));
-}).prototype = p = new cjs.MovieClip();
+/* BAGGRUND */
+#bg {
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:url("https://kim4690.github.io/BEWI-300/BygTek_300x250_mar26_atlas_1.png") center/cover no-repeat;
+}
 
-(lib.Text1 = function() {
-	cjs.MovieClip.apply(this,[{}]);
-	this.instance = new lib.CachedBmp_4();
-	this.instance.setTransform(0,0,0.5,0.5);
-	this.timeline.addTween(cjs.Tween.get(this.instance).wait(300));
-}).prototype = p = new cjs.MovieClip();
+/* BLÅ SHAPE */
+#shape {
+  position:absolute;
+  width:200%;
+  height:200%;
+  background:#26485F;
+  transform: rotate(20deg) scale(0);
+  top:-50%;
+  left:50%;
+  transition: transform 1.2s ease;
+}
 
-(lib.CTA = function() {
-	cjs.MovieClip.apply(this,[{}]);
-	this.instance = new lib.CachedBmp_2();
-	this.instance.setTransform(2.7,0,0.5,0.5);
-	this.instance_1 = new lib.CachedBmp_1();
-	this.instance_1.setTransform(0,0.65,0.5,0.5);
-	this.timeline.addTween(cjs.Tween.get({}).to({state:[{t:this.instance_1},{t:this.instance}]}).wait(300));
-}).prototype = p = new cjs.MovieClip();
+/* LOGO */
+#logo {
+  position:absolute;
+  top:10px;
+  right:10px;
+  width:80px;
+  height:20px;
+  background:white;
+}
 
-// 🔧 Stage content (forkortet – din animation er bevaret)
-(lib.Untitled3 = function() {
-	cjs.MovieClip.apply(this,[{}]);
+/* TEKST */
+.text {
+  position:absolute;
+  left:15px;
+  right:15px;
+  color:#fff;
+  opacity:0;
+  transition: opacity 0.6s ease;
+}
 
-	this.instance = new lib.LinkedFile();
-	this.instance.setTransform(-53.1,-1.95,0.1776,0.1902);
+#text1 { top:40px; }
+#text2 { top:60px; }
 
-	this.timeline.addTween(cjs.Tween.get(this.instance).wait(300));
-}).prototype = p = new lib.AnMovieClip();
+/* CTA */
+#cta {
+  position:absolute;
+  bottom:15px;
+  left:15px;
+  background:#fff;
+  color:#000;
+  padding:6px 12px;
+  font-size:12px;
+  opacity:0;
+  transform: translateY(20px);
+  transition: all 0.6s ease;
+}
 
-// 🔧 Properties
-lib.properties = {
-	id: 'F76BD3534F92AF479E891204213A05E2',
-	width: 300,
-	height: 250,
-	fps: 30,
-	manifest: [
-  {src:"https://kim4690.github.io/BEWI-300/BygTek_300x250_mar26_atlas_1.png", id:"BygTek_300x250_mar26_atlas_1"}
-]
-};
+/* STATES */
+.step1 #shape {
+  transform: rotate(20deg) scale(1);
+}
 
-// 🔧 Stage
-(lib.Stage = function(canvas) {
-	createjs.Stage.call(this, canvas);
-}).prototype = p = new createjs.Stage();
+.step2 #text1 {
+  opacity:1;
+}
 
-// 🔥 FIX: ingen Adobe responsive
-an.makeResponsive = function() {};
+.step3 #text1 {
+  opacity:0;
+}
 
-// 🔧 Composition
-an.compositions = an.compositions || {};
-an.compositions['F76BD3534F92AF479E891204213A05E2'] = {
-  getLibrary: function() { return lib; },
-  getSpriteSheet: function() { return ss; },
-  getImages: function() { return img; }
-};
+.step4 #text2 {
+  opacity:1;
+}
 
-an.getComposition = function(id) {
-	return an.compositions[id];
-};
+.step2 #cta,
+.step4 #cta {
+  opacity:1;
+  transform: translateY(0);
+}
+</style>
+</head>
 
-// 🔥 KRITISK (DENNE SKAL VÆRE MED)
-an.compositionLoaded('F76BD3534F92AF479E891204213A05E2');
+<body>
 
-})(window.createjs = window.createjs||{}, window.AdobeAn = window.AdobeAn||{});
+<div id="banner">
+  <div id="bg"></div>
+  <div id="shape"></div>
+
+  <div id="logo"></div>
+
+  <div id="text1" class="text">[TEKST 1 HER]</div>
+  <div id="text2" class="text">[TEKST 2 HER]</div>
+
+  <div id="cta">Læs mere</div>
+</div>
+
+<script>
+var banner = document.getElementById("banner");
+
+// STEP 1 – shape
+setTimeout(() => banner.classList.add("step1"), 200);
+
+// STEP 2 – text1 + CTA
+setTimeout(() => banner.classList.add("step2"), 2000);
+
+// STEP 3 – text1 ud
+setTimeout(() => banner.classList.add("step3"), 4000);
+
+// STEP 4 – text2 ind
+setTimeout(() => banner.classList.add("step4"), 5000);
+
+// klik
+banner.addEventListener("click", function(){
+  window.open(
+    "https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering",
+    "_blank"
+  );
+});
+</script>
+
+</body>
+</html>
