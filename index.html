@@ -40,15 +40,11 @@ canvas {
 <script>
 var canvas = document.getElementById("canvas");
 
-function start() {
-  var comp = AdobeAn.getComposition("F76BD3534F92AF479E891204213A05E2");
+AdobeAn.bootstrapCallback(function(compId) {
 
-  if (!comp) {
-    setTimeout(start, 100);
-    return;
-  }
-
+  var comp = AdobeAn.getComposition(compId);
   var lib = comp.getLibrary();
+
   var loader = new createjs.LoadQueue(false);
 
   loader.addEventListener("fileload", function(evt){
@@ -58,6 +54,28 @@ function start() {
   });
 
   loader.addEventListener("complete", function(){
+
+    var exportRoot = new lib.Untitled3();
+    var stage = new lib.Stage(canvas);
+
+    stage.addChild(exportRoot);
+    createjs.Ticker.framerate = lib.properties.fps;
+    createjs.Ticker.addEventListener("tick", stage);
+
+    // CTA klik
+    canvas.addEventListener("click", function(){
+      window.open(
+        "https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering%20",
+        "_blank"
+      );
+    });
+
+  });
+
+  loader.loadManifest(lib.properties.manifest);
+
+});
+</script>
 
     var exportRoot = new lib.Untitled3();
     var stage = new lib.Stage(canvas);
