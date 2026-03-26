@@ -16,9 +16,8 @@ html, body {
 }
 
 #banner-wrapper {
-  width: 100%;
-  max-width: 300px;
-  aspect-ratio: 300 / 250;
+  width: 300px;
+  height: 250px;
   margin: 0 auto;
 }
 
@@ -57,39 +56,21 @@ function startBanner() {
   var lib = comp.getLibrary();
   var queue = new createjs.LoadQueue(false);
 
- queue.addEventListener("complete", function(){
-
-  // 🔥 GLOBAL spritesheet (det er hele pointen)
-  window.ss["BygTek_300x250_mar26_atlas_1"] = new createjs.SpriteSheet({
-    images: [lib.images["BygTek_300x250_mar26_atlas_1"]],
-    frames: lib.ssMetadata[0].frames
+  queue.addEventListener("fileload", function(evt){
+    if (evt.item.type === "image") {
+      lib.images = lib.images || {};
+      lib.images[evt.item.id] = evt.result;
+    }
   });
 
-  var exportRoot = new lib.Untitled3();
-  var stage = new lib.Stage(canvas);
+  queue.addEventListener("complete", function(){
 
-  stage.addChild(exportRoot);
-  createjs.Ticker.framerate = lib.properties.fps;
-  createjs.Ticker.addEventListener("tick", stage);
-
-  canvas.addEventListener("click", function(){
-    window.open(
-      "https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering%20",
-      "_blank"
-    );
-  });
-
-});
-
-    // 🔥 KRITISK FIX (spritesheet)
-    var ss = {};
-    ss["BygTek_300x250_mar26_atlas_1"] = new createjs.SpriteSheet({
+    // GLOBAL spritesheet
+    window.ss = {};
+    window.ss["BygTek_300x250_mar26_atlas_1"] = new createjs.SpriteSheet({
       images: [lib.images["BygTek_300x250_mar26_atlas_1"]],
       frames: lib.ssMetadata[0].frames
     });
-
-    // Gør ss globalt (så din JS kan bruge den)
-    window.ss = ss;
 
     var exportRoot = new lib.Untitled3();
     var stage = new lib.Stage(canvas);
