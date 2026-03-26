@@ -92,7 +92,9 @@ an.makeResponsive = function() {};
 // 🔧 Composition
 an.compositions = an.compositions || {};
 an.compositions['F76BD3534F92AF479E891204213A05E2'] = {
-	getLibrary: function() { return lib; }
+  getLibrary: function() { return lib; },
+  getSpriteSheet: function() { return ss; },
+  getImages: function() { return img; }
 };
 
 an.getComposition = function(id) {
