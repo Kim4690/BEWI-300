@@ -2,81 +2,36 @@
 <html lang="da">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
-<script>
-window.createjs = window.createjs || {};
-window.AdobeAn = window.AdobeAn || {};
-</script>
-
-<!-- 🔥 DIN JS FIL -->
 <script src="https://kim4690.github.io/BEWI-300/BygTek_300x250_mar26_v2.js"></script>
 
 <style>
-html, body {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background: #fff;
-}
-
-#banner-wrapper {
-  width: 300px;
-  height: 250px;
-}
-
-canvas {
-  width: 100%;
-  height: 100%;
-  display: block;
-  cursor: pointer;
-}
+body { margin:0; }
+canvas { display:block; }
 </style>
 </head>
 
 <body>
 
-<div id="banner-wrapper">
-  <canvas id="canvas" width="300" height="250"></canvas>
-</div>
+<canvas id="canvas" width="300" height="250"></canvas>
 
 <script>
 var canvas = document.getElementById("canvas");
 
-function init() {
+var comp = AdobeAn.getComposition("F76BD3534F92AF479E891204213A05E2");
+var lib = comp.getLibrary();
 
-  if (!window.AdobeAn || !window.AdobeAn.getComposition) {
-    setTimeout(init, 100);
-    return;
+var loader = new createjs.LoadQueue(false);
+
+loader.addEventListener("fileload", function(evt){
+  if (evt.item.type === "image") {
+    lib.images = lib.images || {};
+    lib.images[evt.item.id] = evt.result;
   }
-
-  var comp = window.AdobeAn.getComposition("F76BD3534F92AF479E891204213A05E2");
-
-  if (!comp) {
-    setTimeout(init, 100);
-    return;
-  }
-
-  var lib = comp.getLibrary();
-  var loader = new createjs.LoadQueue(false);
-
-  loader.addEventListener("fileload", function(evt){
-    if (evt.item.type === "image") {
-      lib.images = lib.images || {};
-      lib.images[evt.item.id] = evt.result;
-    }
-  });
+});
 
 loader.addEventListener("complete", function(){
-
-  var spriteSheet = new createjs.SpriteSheet({
-    images: [lib.images["BygTek_300x250_mar26_atlas_1"]],
-    frames: lib.ssMetadata[0].frames
-  });
-
-  lib.ss = lib.ss || {};
-  lib.ss["BygTek_300x250_mar26_atlas_1"] = spriteSheet;
 
   var exportRoot = new lib.Untitled3();
   var stage = new lib.Stage(canvas);
@@ -86,20 +41,9 @@ loader.addEventListener("complete", function(){
   createjs.Ticker.framerate = lib.properties.fps;
   createjs.Ticker.addEventListener("tick", stage);
 
-  // ❌ INGEN gotoAndPlay (den crasher hos dig)
-
-  canvas.addEventListener("click", function(){
-    window.open(
-      "https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering%20",
-      "_blank"
-    );
-  });
-
 });
-  loader.loadManifest(lib.properties.manifest);
-}
 
-init();
+loader.loadManifest(lib.properties.manifest);
 </script>
 
 </body>
