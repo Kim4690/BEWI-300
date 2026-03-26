@@ -4,7 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- CreateJS -->
 <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+
+<!-- Din Adobe JS -->
 <script src="BygTek_300x250_mar26.js"></script>
 
 <style>
@@ -40,6 +43,7 @@ canvas {
 <script>
 var canvas = document.getElementById("canvas");
 
+// 🔥 Adobe korrekt init (vigtigt!)
 AdobeAn.bootstrapCallback(function(compId) {
 
   var comp = AdobeAn.getComposition(compId);
@@ -62,7 +66,7 @@ AdobeAn.bootstrapCallback(function(compId) {
     createjs.Ticker.framerate = lib.properties.fps;
     createjs.Ticker.addEventListener("tick", stage);
 
-    // CTA klik
+    // 🔗 Klik på hele banneret
     canvas.addEventListener("click", function(){
       window.open(
         "https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering%20",
@@ -75,28 +79,6 @@ AdobeAn.bootstrapCallback(function(compId) {
   loader.loadManifest(lib.properties.manifest);
 
 });
-</script>
-
-    var exportRoot = new lib.Untitled3();
-    var stage = new lib.Stage(canvas);
-
-    stage.addChild(exportRoot);
-    createjs.Ticker.framerate = lib.properties.fps;
-    createjs.Ticker.addEventListener("tick", stage);
-
-    canvas.addEventListener("click", function(){
-      window.open(
-        "https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering%20",
-        "_blank"
-      );
-    });
-
-  });
-
-  loader.loadManifest(lib.properties.manifest);
-}
-
-start();
 </script>
 
 </body>
