@@ -66,17 +66,19 @@ function startBanner() {
   var lib = comp.getLibrary();
   var loader = new createjs.LoadQueue(false);
 
- loader.addEventListener("fileload", function(evt){
+loader.addEventListener("fileload", function(evt){
   if (evt.item.type === "image") {
 
-    console.log("LOADER IMAGE:", evt.item.id);
-
     if (!lib.images) {
-      console.log("lib.images findes ikke – opretter den nu");
       lib.images = {};
     }
 
     lib.images[evt.item.id] = evt.result;
+
+    // 🔥 DET HER FIXER DIN FEJL
+    if (!ss[evt.item.id]) {
+      ss[evt.item.id] = evt.result;
+    }
   }
 });
 
