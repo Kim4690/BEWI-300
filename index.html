@@ -70,30 +70,30 @@ function init() {
 
   loader.addEventListener("complete", function(){
 
-    var ss = comp.getSpriteSheet();
-ss["BygTek_300x250_mar26_atlas_1"] = new createjs.SpriteSheet({
-  images: [lib.images["BygTek_300x250_mar26_atlas_1"]],
-  frames: lib.ssMetadata[0].frames
-});
-      images: [lib.images["BygTek_300x250_mar26_atlas_1"]],
-      frames: lib.ssMetadata[0].frames
-    });
-
-    var exportRoot = new lib.Untitled3();
-    var stage = new lib.Stage(canvas);
-
-    stage.addChild(exportRoot);
-    createjs.Ticker.framerate = lib.properties.fps;
-    createjs.Ticker.addEventListener("tick", stage);
-
-    canvas.addEventListener("click", function(){
-      window.open(
-        "https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering%20",
-        "_blank"
-      );
-    });
-
+  var spriteSheet = new createjs.SpriteSheet({
+    images: [lib.images["BygTek_300x250_mar26_atlas_1"]],
+    frames: lib.ssMetadata[0].frames
   });
+
+  // bind korrekt
+  lib.ss = lib.ss || {};
+  lib.ss["BygTek_300x250_mar26_atlas_1"] = spriteSheet;
+
+  var exportRoot = new lib.Untitled3();
+  var stage = new lib.Stage(canvas);
+
+  stage.addChild(exportRoot);
+  createjs.Ticker.framerate = lib.properties.fps;
+  createjs.Ticker.addEventListener("tick", stage);
+
+  canvas.addEventListener("click", function(){
+    window.open(
+      "https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering%20",
+      "_blank"
+    );
+  });
+
+});
 
   loader.loadManifest(lib.properties.manifest);
 }
