@@ -339,7 +339,7 @@ lib.properties = {
 	color: "#FFFFFF",
 	opacity: 1.00,
 	manifest: [
-		{src:"images/BygTek_300x250_mar26_atlas_1.png", id:"BygTek_300x250_mar26_atlas_1"}
+		{src:"BygTek_300x250_mar26_atlas_1.png", id:"BygTek_300x250_mar26_atlas_1"}
 	],
 	preloads: []
 };
