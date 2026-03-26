@@ -77,7 +77,7 @@ lib.properties = {
 	height: 250,
 	fps: 30,
 	manifest: [
-  {src:"./BygTek_300x250_mar26_atlas_1.png", id:"BygTek_300x250_mar26_atlas_1"}
+  {src:"https://kim4690.github.io/BEWI-300/BygTek_300x250_mar26_atlas_1.png", id:"BygTek_300x250_mar26_atlas_1"}
 ]
 };
 
