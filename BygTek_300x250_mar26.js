@@ -91,13 +91,7 @@ an.makeResponsive = function() {};
 
 // 🔧 Composition
 an.compositions = an.compositions || {};
-an.getComposition = function(id) {
-	return an.compositions[id];
-};
-
-an.compositionLoaded('F76BD3534F92AF479E891204213A05E2');
-
-})(window.createjs = window.createjs||{}, window.AdobeAn = window.AdobeAn||{});
+an.compositions['F76BD3534F92AF479E891204213A05E2'] = {
   getLibrary: function() { return lib; },
   getSpriteSheet: function() { return ss; },
   getImages: function() { return img; }
@@ -107,7 +101,7 @@ an.getComposition = function(id) {
 	return an.compositions[id];
 };
 
-// 🔥 DEN MANGLENDE LINJE
+// 🔥 KRITISK (DENNE SKAL VÆRE MED)
 an.compositionLoaded('F76BD3534F92AF479E891204213A05E2');
 
 })(window.createjs = window.createjs||{}, window.AdobeAn = window.AdobeAn||{});
