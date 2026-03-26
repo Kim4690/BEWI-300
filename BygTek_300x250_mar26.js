@@ -91,7 +91,13 @@ an.makeResponsive = function() {};
 
 // 🔧 Composition
 an.compositions = an.compositions || {};
-an.compositions['F76BD3534F92AF479E891204213A05E2'] = {
+an.getComposition = function(id) {
+	return an.compositions[id];
+};
+
+an.compositionLoaded('F76BD3534F92AF479E891204213A05E2');
+
+})(window.createjs = window.createjs||{}, window.AdobeAn = window.AdobeAn||{});
   getLibrary: function() { return lib; },
   getSpriteSheet: function() { return ss; },
   getImages: function() { return img; }
