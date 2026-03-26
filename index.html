@@ -7,41 +7,7 @@
 <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
 <script>
 function initBanner() {
-
-  var canvas = document.getElementById("canvas");
-  var comp = AdobeAn.getComposition("F76BD3534F92AF479E891204213A05E2");
-  var lib = comp.getLibrary();
-
-  var loader = new createjs.LoadQueue(false);
-
-  loader.addEventListener("fileload", function(evt){
-    if (evt.item.type === "image") {
-      lib.images[evt.item.id] = evt.result;
-    }
-  });
-
-  loader.addEventListener("complete", function(){
-
-    var exportRoot = new lib.Untitled3();
-    var stage = new lib.Stage(canvas);
-
-    stage.addChild(exportRoot);
-    createjs.Ticker.framerate = lib.properties.fps;
-    createjs.Ticker.addEventListener("tick", stage);
-
-    canvas.style.cursor = "pointer";
-    canvas.addEventListener("click", function(){
-      window.open(
-        "https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering%20",
-        "_blank"
-      );
-    });
-
-  });
-
-  loader.loadManifest(lib.properties.manifest);
-}
-
+  
 // 👇 load JS korrekt først
 var script = document.createElement("script");
 script.src = "https://kim4690.github.io/BEWI-300/BygTek_300x250_mar26.js";
