@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- CreateJS -->
 <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
 
 <style>
@@ -15,7 +14,6 @@ html, body {
   overflow: hidden;
 }
 
-/* Responsiv banner */
 #banner-wrapper {
   width: 100%;
   max-width: 300px;
@@ -40,15 +38,13 @@ canvas {
 </div>
 
 <script>
-// 🔥 LOAD DIN BANNER JS FRA GITHUB
 var script = document.createElement("script");
-script.src = "https://kim4690.github.io/BEWI-300/banner.js";";";
+script.src = "https://kim4690.github.io/BEWI-300/banner.js";
 
 script.onload = function() {
 
   var canvas = document.getElementById("canvas");
 
-  // Vent på Adobe composition
   function start() {
     var comp = AdobeAn.getComposition("F76BD3534F92AF479E891204213A05E2");
 
@@ -75,7 +71,6 @@ script.onload = function() {
       createjs.Ticker.framerate = lib.properties.fps;
       createjs.Ticker.addEventListener("tick", stage);
 
-      // 🔗 KLIK (HELE BANNERET)
       canvas.addEventListener("click", function(){
         window.open(
           "https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering%20",
