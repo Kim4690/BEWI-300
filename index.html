@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+
 <script>
 window.createjs = window.createjs || {};
 window.AdobeAn = window.AdobeAn || {};
@@ -70,7 +71,6 @@ function startBanner() {
 
   queue.addEventListener("complete", function(){
 
-    // GLOBAL spritesheet
     window.ss = {};
     window.ss["BygTek_300x250_mar26_atlas_1"] = new createjs.SpriteSheet({
       images: [lib.images["BygTek_300x250_mar26_atlas_1"]],
@@ -91,7 +91,7 @@ function startBanner() {
       );
     });
 
-  });
+  }); // 🔥 DEN MANGLENDE LINJE
 
   queue.loadManifest(lib.properties.manifest);
 }
