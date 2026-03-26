@@ -101,4 +101,4 @@ an.getComposition = function(id) {
 	return an.compositions[id];
 };
 
-})(createjs = createjs||{}, AdobeAn = AdobeAn||{});
+})(window.createjs = window.createjs||{}, window.AdobeAn = window.AdobeAn||{});
