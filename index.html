@@ -46,12 +46,12 @@ var canvas = document.getElementById("canvas");
 
 function startBanner() {
 
-  if (!window.AdobeAn || !AdobeAn.getComposition) {
+  if (!window.AdobeAn || !window.AdobeAn.getComposition) {
     setTimeout(startBanner, 100);
     return;
   }
 
-  var comp = AdobeAn.getComposition("F76BD3534F92AF479E891204213A05E2");
+  var comp = window.AdobeAn.getComposition("F76BD3534F92AF479E891204213A05E2");
 
   if (!comp) {
     setTimeout(startBanner, 100);
