@@ -21,8 +21,11 @@ body { margin:0; }
   width:300px;
   height:250px;
   background:url("https://kim4690.github.io/BEWI-300/BygTek_300x250_mar26_atlas_1.png") no-repeat;
-  background-size:2000px 1333px;
+
+  /* 🔥 DET HER ER FIXET */
+  background-size:300px 250px;
   background-position:0 0;
+}
 }
 
 /* TEXT 1 */
