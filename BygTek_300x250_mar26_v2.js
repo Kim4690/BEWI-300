@@ -12,16 +12,17 @@ body { margin:0; }
   position:relative;
   overflow:hidden;
   cursor:pointer;
+  background:#fff;
 }
 
 /* BAGGRUND */
 #bg {
   position:absolute;
-  width:100%;
-  height:100%;
+  width:300px;
+  height:250px;
   background:url("https://kim4690.github.io/BEWI-300/BygTek_300x250_mar26_atlas_1.png") no-repeat;
   background-size:2000px 1333px;
-  background-position:0px 0px;
+  background-position:0 0;
 }
 
 /* TEXT 1 */
@@ -31,9 +32,13 @@ body { margin:0; }
   height:48px;
   top:40px;
   left:30px;
+
   background:url("https://kim4690.github.io/BEWI-300/BygTek_300x250_mar26_atlas_1.png") no-repeat;
   background-size:2000px 1333px;
+
+  /* 🔥 KORREKT */
   background-position:-492px -1335px;
+
   opacity:0;
   transition:opacity 0.6s;
 }
@@ -45,9 +50,13 @@ body { margin:0; }
   height:96px;
   top:60px;
   left:30px;
+
   background:url("https://kim4690.github.io/BEWI-300/BygTek_300x250_mar26_atlas_1.png") no-repeat;
   background-size:2000px 1333px;
+
+  /* 🔥 KORREKT */
   background-position:0px -1335px;
+
   opacity:0;
   transition:opacity 0.6s;
 }
@@ -55,13 +64,17 @@ body { margin:0; }
 /* CTA */
 #cta {
   position:absolute;
-  width:84px;
-  height:22px;
+  width:81px;
+  height:21px;
   bottom:15px;
   left:30px;
+
   background:url("https://kim4690.github.io/BEWI-300/BygTek_300x250_mar26_atlas_1.png") no-repeat;
   background-size:2000px 1333px;
+
+  /* 🔥 KORREKT */
   background-position:-966px -1335px;
+
   opacity:0;
   transform:translateY(20px);
   transition:all 0.6s;
