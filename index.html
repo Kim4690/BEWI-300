@@ -1,9 +1,47 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+<script src="BygTek_300x250_mar26.js"></script>
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+#banner-wrapper {
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 300 / 250;
+  margin: 0 auto;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div id="banner-wrapper">
+  <canvas id="canvas" width="300" height="250"></canvas>
+</div>
+
 <script>
 var canvas = document.getElementById("canvas");
 
 function startBanner() {
 
-  // 🔥 Vent på Adobe
   if (!window.AdobeAn || !AdobeAn.getComposition) {
     setTimeout(startBanner, 100);
     return;
@@ -28,6 +66,16 @@ function startBanner() {
 
   queue.addEventListener("complete", function(){
 
+    // 🔥 KRITISK FIX (spritesheet)
+    var ss = {};
+    ss["BygTek_300x250_mar26_atlas_1"] = new createjs.SpriteSheet({
+      images: [lib.images["BygTek_300x250_mar26_atlas_1"]],
+      frames: lib.ssMetadata[0].frames
+    });
+
+    // Gør ss globalt (så din JS kan bruge den)
+    window.ss = ss;
+
     var exportRoot = new lib.Untitled3();
     var stage = new lib.Stage(canvas);
 
@@ -47,6 +95,8 @@ function startBanner() {
   queue.loadManifest(lib.properties.manifest);
 }
 
-// 🔥 start korrekt
 startBanner();
 </script>
+
+</body>
+</html>
