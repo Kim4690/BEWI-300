@@ -1,16 +1,9 @@
 <script>
 var canvas = document.getElementById("canvas");
 
-function init() {
+AdobeAn.bootstrapCallback(function(compId) {
 
-  var comp = AdobeAn.getComposition("F76BD3534F92AF479E891204213A05E2");
-
-  if (!comp) {
-    console.log("Composition ikke klar endnu...");
-    setTimeout(init, 100);
-    return;
-  }
-
+  var comp = AdobeAn.getComposition(compId);
   var lib = comp.getLibrary();
   var loader = new createjs.LoadQueue(false);
 
@@ -23,7 +16,6 @@ function init() {
 
   loader.addEventListener("complete", function(){
 
-    // 🔥 vigtig: sprite sheet
     window.ss = {};
     window.ss["BygTek_300x250_mar26_atlas_1"] = new createjs.SpriteSheet({
       images: [lib.images["BygTek_300x250_mar26_atlas_1"]],
@@ -37,7 +29,6 @@ function init() {
     createjs.Ticker.framerate = lib.properties.fps;
     createjs.Ticker.addEventListener("tick", stage);
 
-    // klik
     canvas.addEventListener("click", function(){
       window.open(
         "https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering%20",
@@ -48,7 +39,6 @@ function init() {
   });
 
   loader.loadManifest(lib.properties.manifest);
-}
 
-init();
+});
 </script>
