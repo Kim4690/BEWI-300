@@ -44,9 +44,20 @@ canvas {
 <script>
 var canvas = document.getElementById("canvas");
 
-AdobeAn.bootstrapCallback(function(compId) {
+function init() {
 
-  var comp = AdobeAn.getComposition(compId);
+  if (!window.AdobeAn || !window.AdobeAn.getComposition) {
+    setTimeout(init, 100);
+    return;
+  }
+
+  var comp = window.AdobeAn.getComposition("F76BD3534F92AF479E891204213A05E2");
+
+  if (!comp) {
+    setTimeout(init, 100);
+    return;
+  }
+
   var lib = comp.getLibrary();
   var loader = new createjs.LoadQueue(false);
 
@@ -82,8 +93,9 @@ AdobeAn.bootstrapCallback(function(compId) {
   });
 
   loader.loadManifest(lib.properties.manifest);
+}
 
-});
+init();
 </script>
 
 </body>
