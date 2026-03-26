@@ -4,11 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- CreateJS -->
 <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
-
-<!-- Din Adobe JS -->
-<script src="BygTek_300x250_mar26.js"></script>
 
 <style>
 html, body {
@@ -43,42 +39,60 @@ canvas {
 <script>
 var canvas = document.getElementById("canvas");
 
-// 🔥 Adobe korrekt init (vigtigt!)
-AdobeAn.bootstrapCallback(function(compId) {
+// 🔥 load Adobe JS først
+var s = document.createElement("script");
+s.src = "BygTek_300x250_mar26.js";
 
-  var comp = AdobeAn.getComposition(compId);
-  var lib = comp.getLibrary();
+s.onload = function() {
 
-  var loader = new createjs.LoadQueue(false);
-
-  loader.addEventListener("fileload", function(evt){
-    if (evt.item.type === "image") {
-      lib.images[evt.item.id] = evt.result;
+  // 🔥 vent på AdobeAn
+  function start() {
+    if (!window.AdobeAn) {
+      setTimeout(start, 100);
+      return;
     }
-  });
 
-  loader.addEventListener("complete", function(){
+    var comp = AdobeAn.getComposition("F76BD3534F92AF479E891204213A05E2");
+    if (!comp) {
+      setTimeout(start, 100);
+      return;
+    }
 
-    var exportRoot = new lib.Untitled3();
-    var stage = new lib.Stage(canvas);
+    var lib = comp.getLibrary();
 
-    stage.addChild(exportRoot);
-    createjs.Ticker.framerate = lib.properties.fps;
-    createjs.Ticker.addEventListener("tick", stage);
+    var loader = new createjs.LoadQueue(false);
 
-    // 🔗 Klik på hele banneret
-    canvas.addEventListener("click", function(){
-      window.open(
-        "https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering%20",
-        "_blank"
-      );
+    loader.addEventListener("fileload", function(evt){
+      if (evt.item.type === "image") {
+        lib.images[evt.item.id] = evt.result;
+      }
     });
 
-  });
+    loader.addEventListener("complete", function(){
 
-  loader.loadManifest(lib.properties.manifest);
+      var exportRoot = new lib.Untitled3();
+      var stage = new lib.Stage(canvas);
 
-});
+      stage.addChild(exportRoot);
+      createjs.Ticker.framerate = lib.properties.fps;
+      createjs.Ticker.addEventListener("tick", stage);
+
+      canvas.addEventListener("click", function(){
+        window.open(
+          "https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering%20",
+          "_blank"
+        );
+      });
+
+    });
+
+    loader.loadManifest(lib.properties.manifest);
+  }
+
+  start();
+};
+
+document.head.appendChild(s);
 </script>
 
 </body>
