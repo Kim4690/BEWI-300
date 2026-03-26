@@ -5,6 +5,25 @@ var lib = {};
 var ss = {};
 var img = {};
 
+	an.bootcompsLoaded = an.bootcompsLoaded || [];
+an.bootstrapListeners = an.bootstrapListeners || [];
+
+an.bootstrapCallback = function(fnCallback) {
+	an.bootstrapListeners.push(fnCallback);
+	if (an.bootcompsLoaded.length > 0) {
+		for (var i = 0; i < an.bootcompsLoaded.length; ++i) {
+			fnCallback(an.bootcompsLoaded[i]);
+		}
+	}
+};
+
+an.compositionLoaded = function(id) {
+	an.bootcompsLoaded.push(id);
+	for (var j = 0; j < an.bootstrapListeners.length; j++) {
+		an.bootstrapListeners[j](id);
+	}
+};
+	
 lib.ssMetadata = [
 	{name:"BygTek_300x250_mar26_atlas_1", frames: [[0,1335,490,192],[492,1335,472,96],[966,1335,162,42],[1130,1335,151,42],[1283,1335,108,34],[0,0,2000,1333]]}
 ];
