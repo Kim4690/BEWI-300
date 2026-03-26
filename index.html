@@ -4,7 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- CreateJS -->
 <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+
+<!-- 🔥 VIGTIGT FIX -->
+<script>
+var AdobeAn = AdobeAn || {};
+</script>
+
+<!-- Din Adobe JS -->
+<script src="BygTek_300x250_mar26.js"></script>
 
 <style>
 html, body {
@@ -39,60 +48,54 @@ canvas {
 <script>
 var canvas = document.getElementById("canvas");
 
-// 🔥 load Adobe JS først
-var s = document.createElement("script");
-s.src = "BygTek_300x250_mar26.js";
+// 🔥 STABIL START (uden bootstrap problemer)
+function startBanner() {
 
-s.onload = function() {
-
-  // 🔥 vent på AdobeAn
-  function start() {
-    if (!window.AdobeAn) {
-      setTimeout(start, 100);
-      return;
-    }
-
-    var comp = AdobeAn.getComposition("F76BD3534F92AF479E891204213A05E2");
-    if (!comp) {
-      setTimeout(start, 100);
-      return;
-    }
-
-    var lib = comp.getLibrary();
-
-    var loader = new createjs.LoadQueue(false);
-
-    loader.addEventListener("fileload", function(evt){
-      if (evt.item.type === "image") {
-        lib.images[evt.item.id] = evt.result;
-      }
-    });
-
-    loader.addEventListener("complete", function(){
-
-      var exportRoot = new lib.Untitled3();
-      var stage = new lib.Stage(canvas);
-
-      stage.addChild(exportRoot);
-      createjs.Ticker.framerate = lib.properties.fps;
-      createjs.Ticker.addEventListener("tick", stage);
-
-      canvas.addEventListener("click", function(){
-        window.open(
-          "https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering%20",
-          "_blank"
-        );
-      });
-
-    });
-
-    loader.loadManifest(lib.properties.manifest);
+  if (!window.AdobeAn) {
+    setTimeout(startBanner, 100);
+    return;
   }
 
-  start();
-};
+  var comp = AdobeAn.getComposition("F76BD3534F92AF479E891204213A05E2");
 
-document.head.appendChild(s);
+  if (!comp) {
+    setTimeout(startBanner, 100);
+    return;
+  }
+
+  var lib = comp.getLibrary();
+  var loader = new createjs.LoadQueue(false);
+
+  loader.addEventListener("fileload", function(evt){
+    if (evt.item.type === "image") {
+      lib.images[evt.item.id] = evt.result;
+    }
+  });
+
+  loader.addEventListener("complete", function(){
+
+    var exportRoot = new lib.Untitled3();
+    var stage = new lib.Stage(canvas);
+
+    stage.addChild(exportRoot);
+    createjs.Ticker.framerate = lib.properties.fps;
+    createjs.Ticker.addEventListener("tick", stage);
+
+    // 🔗 Klik på hele banneret
+    canvas.addEventListener("click", function(){
+      window.open(
+        "https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering%20",
+        "_blank"
+      );
+    });
+
+  });
+
+  loader.loadManifest(lib.properties.manifest);
+}
+
+// start
+startBanner();
 </script>
 
 </body>
