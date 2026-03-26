@@ -101,4 +101,7 @@ an.getComposition = function(id) {
 	return an.compositions[id];
 };
 
+// 🔥 DEN MANGLENDE LINJE
+an.compositionLoaded('F76BD3534F92AF479E891204213A05E2');
+
 })(window.createjs = window.createjs||{}, window.AdobeAn = window.AdobeAn||{});
