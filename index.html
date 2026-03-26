@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="da">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- CreateJS -->
 <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
 
 <style>
@@ -11,9 +12,10 @@ html, body {
   margin: 0;
   padding: 0;
   background: #ffffff;
+  overflow: hidden;
 }
 
-/* RESPONSIV WRAPPER */
+/* Responsiv banner */
 #banner-wrapper {
   width: 100%;
   max-width: 300px;
@@ -22,11 +24,11 @@ html, body {
   position: relative;
 }
 
-/* Canvas skalerer korrekt */
 canvas {
   width: 100%;
   height: 100%;
   display: block;
+  cursor: pointer;
 }
 </style>
 </head>
@@ -38,54 +40,58 @@ canvas {
 </div>
 
 <script>
-function startBanner() {
+// 🔥 LOAD DIN BANNER JS FRA GITHUB
+var script = document.createElement("script");
+script.src = "https://kim4690.github.io/Kim4690/BEWI-300/BygTek_300x250_mar26.js";
+
+script.onload = function() {
 
   var canvas = document.getElementById("canvas");
 
-  var comp = AdobeAn.getComposition("F76BD3534F92AF479E891204213A05E2");
-  if (!comp) {
-    console.log("venter på AdobeAn...");
-    setTimeout(startBanner, 100);
-    return;
-  }
+  // Vent på Adobe composition
+  function start() {
+    var comp = AdobeAn.getComposition("F76BD3534F92AF479E891204213A05E2");
 
-  var lib = comp.getLibrary();
-
-  var loader = new createjs.LoadQueue(false);
-
-  loader.addEventListener("fileload", function(evt){
-    if (evt.item.type === "image") {
-      lib.images[evt.item.id] = evt.result;
+    if (!comp) {
+      setTimeout(start, 100);
+      return;
     }
-  });
 
-  loader.addEventListener("complete", function(){
+    var lib = comp.getLibrary();
+    var loader = new createjs.LoadQueue(false);
 
-    var exportRoot = new lib.Untitled3();
-    var stage = new lib.Stage(canvas);
-
-    stage.addChild(exportRoot);
-    createjs.Ticker.framerate = lib.properties.fps;
-    createjs.Ticker.addEventListener("tick", stage);
-
-    canvas.style.cursor = "pointer";
-    canvas.addEventListener("click", function(){
-      window.open(
-        "https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering%20",
-        "_blank"
-      );
+    loader.addEventListener("fileload", function(evt){
+      if (evt.item.type === "image") {
+        lib.images[evt.item.id] = evt.result;
+      }
     });
 
-  });
+    loader.addEventListener("complete", function(){
 
-  loader.loadManifest(lib.properties.manifest);
-}
+      var exportRoot = new lib.Untitled3();
+      var stage = new lib.Stage(canvas);
 
-// load banner JS
-var s = document.createElement("script");
-s.src = "https://kim4690.github.io/BEWI-300/BygTek_300x250_mar26.js";";
-s.onload = startBanner;
-document.head.appendChild(s);
+      stage.addChild(exportRoot);
+      createjs.Ticker.framerate = lib.properties.fps;
+      createjs.Ticker.addEventListener("tick", stage);
+
+      // 🔗 KLIK (HELE BANNERET)
+      canvas.addEventListener("click", function(){
+        window.open(
+          "https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering%20",
+          "_blank"
+        );
+      });
+
+    });
+
+    loader.loadManifest(lib.properties.manifest);
+  }
+
+  start();
+};
+
+document.head.appendChild(script);
 </script>
 
 </body>
