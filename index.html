@@ -1,57 +1,10 @@
-<!DOCTYPE html>
-<html lang="da">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- CreateJS -->
-<script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
-
-<!-- 🔥 VIGTIGT FIX -->
-<script>
-var AdobeAn = AdobeAn || {};
-</script>
-
-<!-- Din Adobe JS -->
-<script src="BygTek_300x250_mar26.js"></script>
-
-<style>
-html, body {
-  margin: 0;
-  padding: 0;
-  background: #ffffff;
-  overflow: hidden;
-}
-
-#banner-wrapper {
-  width: 100%;
-  max-width: 300px;
-  aspect-ratio: 300 / 250;
-  margin: 0 auto;
-}
-
-canvas {
-  width: 100%;
-  height: 100%;
-  display: block;
-  cursor: pointer;
-}
-</style>
-</head>
-
-<body>
-
-<div id="banner-wrapper">
-  <canvas id="canvas" width="300" height="250"></canvas>
-</div>
-
 <script>
 var canvas = document.getElementById("canvas");
 
-// 🔥 STABIL START (uden bootstrap problemer)
 function startBanner() {
 
-  if (!window.AdobeAn) {
+  // 🔥 Vent på Adobe
+  if (!window.AdobeAn || !AdobeAn.getComposition) {
     setTimeout(startBanner, 100);
     return;
   }
@@ -64,25 +17,16 @@ function startBanner() {
   }
 
   var lib = comp.getLibrary();
-  var loader = new createjs.LoadQueue(false);
+  var queue = new createjs.LoadQueue(false);
 
-loader.addEventListener("fileload", function(evt){
-  if (evt.item.type === "image") {
-
-    if (!lib.images) {
-      lib.images = {};
+  queue.addEventListener("fileload", function(evt){
+    if (evt.item.type === "image") {
+      lib.images = lib.images || {};
+      lib.images[evt.item.id] = evt.result;
     }
+  });
 
-    lib.images[evt.item.id] = evt.result;
-
-    // 🔥 DET HER FIXER DIN FEJL
-    if (!ss[evt.item.id]) {
-      ss[evt.item.id] = evt.result;
-    }
-  }
-});
-
-  loader.addEventListener("complete", function(){
+  queue.addEventListener("complete", function(){
 
     var exportRoot = new lib.Untitled3();
     var stage = new lib.Stage(canvas);
@@ -91,7 +35,6 @@ loader.addEventListener("fileload", function(evt){
     createjs.Ticker.framerate = lib.properties.fps;
     createjs.Ticker.addEventListener("tick", stage);
 
-    // 🔗 Klik på hele banneret
     canvas.addEventListener("click", function(){
       window.open(
         "https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering%20",
@@ -101,12 +44,9 @@ loader.addEventListener("fileload", function(evt){
 
   });
 
-  loader.loadManifest(lib.properties.manifest);
+  queue.loadManifest(lib.properties.manifest);
 }
 
-// start
+// 🔥 start korrekt
 startBanner();
 </script>
-
-</body>
-</html>
