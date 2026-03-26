@@ -1,76 +1,29 @@
-<!DOCTYPE html>
-<html lang="da">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
-
-<script>
-window.createjs = window.createjs || {};
-window.AdobeAn = window.AdobeAn || {};
-</script>
-
-<script src="https://kim4690.github.io/BEWI-300/BygTek_300x250_mar26.js"></script>
-
-<style>
-html, body {
-  margin: 0;
-  padding: 0;
-  background: #ffffff;
-  overflow: hidden;
-}
-
-#banner-wrapper {
-  width: 300px;
-  height: 250px;
-  margin: 0 auto;
-}
-
-canvas {
-  width: 100%;
-  height: 100%;
-  display: block;
-  cursor: pointer;
-}
-</style>
-</head>
-
-<body>
-
-<div id="banner-wrapper">
-  <canvas id="canvas" width="300" height="250"></canvas>
-</div>
-
 <script>
 var canvas = document.getElementById("canvas");
 
-function startBanner() {
+function init() {
 
-  if (!window.AdobeAn || !window.AdobeAn.getComposition) {
-    setTimeout(startBanner, 100);
-    return;
-  }
-
-  var comp = window.AdobeAn.getComposition("F76BD3534F92AF479E891204213A05E2");
+  var comp = AdobeAn.getComposition("F76BD3534F92AF479E891204213A05E2");
 
   if (!comp) {
-    setTimeout(startBanner, 100);
+    console.log("Composition ikke klar endnu...");
+    setTimeout(init, 100);
     return;
   }
 
   var lib = comp.getLibrary();
-  var queue = new createjs.LoadQueue(false);
+  var loader = new createjs.LoadQueue(false);
 
-  queue.addEventListener("fileload", function(evt){
+  loader.addEventListener("fileload", function(evt){
     if (evt.item.type === "image") {
       lib.images = lib.images || {};
       lib.images[evt.item.id] = evt.result;
     }
   });
 
-  queue.addEventListener("complete", function(){
+  loader.addEventListener("complete", function(){
 
+    // 🔥 vigtig: sprite sheet
     window.ss = {};
     window.ss["BygTek_300x250_mar26_atlas_1"] = new createjs.SpriteSheet({
       images: [lib.images["BygTek_300x250_mar26_atlas_1"]],
@@ -84,6 +37,7 @@ function startBanner() {
     createjs.Ticker.framerate = lib.properties.fps;
     createjs.Ticker.addEventListener("tick", stage);
 
+    // klik
     canvas.addEventListener("click", function(){
       window.open(
         "https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering%20",
@@ -91,13 +45,10 @@ function startBanner() {
       );
     });
 
-  }); // 🔥 DEN MANGLENDE LINJE
+  });
 
-  queue.loadManifest(lib.properties.manifest);
+  loader.loadManifest(lib.properties.manifest);
 }
 
-startBanner();
+init();
 </script>
-
-</body>
-</html>
