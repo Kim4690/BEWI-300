@@ -2,7 +2,7 @@
 
 var p;
 var lib = {};
-var ss = {};
+var ss = window.ss = window.ss || {};
 var img = {};
 
 	an.bootcompsLoaded = an.bootcompsLoaded || [];
