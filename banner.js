@@ -425,8 +425,8 @@ an.makeResponsive = function(isResp, respDim, isScale, scaleType, domContainers)
 			container.style.width = w * sRatio + 'px';				
 			container.style.height = h * sRatio + 'px';			
 		});
-		stage.scaleX = pRatio*sRatio;			
-		stage.scaleY = pRatio*sRatio;
+		stage.scaleX = 1;
+		stage.scaleY = 1;
 		lastW = iw; lastH = ih; lastS = sRatio;            
 		stage.tickOnUpdate = false;            
 		stage.update();            
