@@ -70,8 +70,11 @@ function init() {
 
   loader.addEventListener("complete", function(){
 
-    window.ss = {};
-    window.ss["BygTek_300x250_mar26_atlas_1"] = new createjs.SpriteSheet({
+    var ss = comp.getSpriteSheet();
+ss["BygTek_300x250_mar26_atlas_1"] = new createjs.SpriteSheet({
+  images: [lib.images["BygTek_300x250_mar26_atlas_1"]],
+  frames: lib.ssMetadata[0].frames
+});
       images: [lib.images["BygTek_300x250_mar26_atlas_1"]],
       frames: lib.ssMetadata[0].frames
     });
