@@ -7,28 +7,24 @@
 <!-- CreateJS -->
 <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
 
-<!-- 🔥 VIGTIG: global init -->
+<!-- 🔥 global init -->
 <script>
 window.createjs = window.createjs || {};
 window.AdobeAn = window.AdobeAn || {};
 </script>
 
-<!-- DIN ORIGINAL JS -->
+<!-- DIN JS -->
 <script src="https://kim4690.github.io/BEWI-300/BygTek_300x250_mar26.js"></script>
 
 <style>
-body {
-  margin:0;
-}
+body { margin:0; }
 
-/* RESPONSIV WRAPPER */
 #banner-wrapper {
   width:100%;
   max-width:300px;
   aspect-ratio:300/250;
 }
 
-/* CANVAS */
 canvas {
   width:100%;
   height:100%;
@@ -49,11 +45,9 @@ var canvas = document.getElementById("canvas");
 
 function init() {
 
-  // 🔥 hent composition
   var comp = AdobeAn.getComposition("F76BD3534F92AF479E891204213A05E2");
 
   if (!comp) {
-    console.log("❌ Composition ikke fundet endnu – prøver igen...");
     setTimeout(init, 100);
     return;
   }
@@ -61,7 +55,6 @@ function init() {
   var lib = comp.getLibrary();
   var loader = new createjs.LoadQueue(false);
 
-  // billeder
   loader.addEventListener("fileload", function(evt){
     if (evt.item.type === "image") {
       lib.images = lib.images || {};
@@ -69,10 +62,9 @@ function init() {
     }
   });
 
-  // når alt er loaded
   loader.addEventListener("complete", function(){
 
-    // 🔥 spritesheet fix
+    // spritesheets
     var ss = comp.getSpriteSheet();
     for (var i = 0; i < lib.ssMetadata.length; i++) {
       ss[lib.ssMetadata[i].name] = new createjs.SpriteSheet({
@@ -81,38 +73,23 @@ function init() {
       });
     }
 
-stage.addChild(exportRoot);
+    // 🔥 DET VIGTIGE (stage + root korrekt sted)
+    var exportRoot = new lib.Untitled3();
+    var stage = new lib.Stage(canvas);
 
-// 🔥 hvid CTA baggrund
-var ctaBg = new createjs.Shape();
-ctaBg.graphics.beginFill("#ffffff").drawRoundRect(0,0,85,25,4);
+    stage.addChild(exportRoot);
 
-ctaBg.x = 20;
-ctaBg.y = 210;
+    // 🔥 CTA BAGGRUND (REN & STABIL)
+    var ctaBg = new createjs.Shape();
+    ctaBg.graphics.beginFill("#ffffff").drawRoundRect(0,0,90,28,6);
 
-// tilføj EFTER exportRoot
-stage.addChild(ctaBg);
+    ctaBg.x = 20;
+    ctaBg.y = 205;
 
-// 🔥 læg den LIGE UNDER CTA (ikke helt bagved)
-stage.setChildIndex(ctaBg, stage.getNumChildren() - 2);
+    // bag animation
+    stage.addChildAt(ctaBg, 0);
 
-ctaBg.x = 20;
-ctaBg.y = 210;
-
-// tilføj
-stage.addChild(ctaBg);
-
-// 🔥 sørg for den ligger BAG animationen
-stage.setChildIndex(ctaBg, 0);
-
-// position matcher animation
-ctaBg.x = 20;
-ctaBg.y = 210;
-
-stage.addChild(ctaBg);
-stage.setChildIndex(ctaBg, stage.getNumChildren()-1);
-
-    // animation start
+    // start animation
     createjs.Ticker.framerate = lib.properties.fps;
     createjs.Ticker.addEventListener("tick", stage);
 
@@ -131,7 +108,6 @@ stage.setChildIndex(ctaBg, stage.getNumChildren()-1);
   loader.loadManifest(lib.properties.manifest);
 }
 
-// 🔥 start når siden er klar
 window.onload = init;
 </script>
 
