@@ -460,4 +460,3 @@ an.handleFilterCache = function(event) {
 
 
 })(createjs = createjs||{}, AdobeAn = AdobeAn||{});
-var createjs, AdobeAn;
