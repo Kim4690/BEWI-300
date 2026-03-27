@@ -3,25 +3,16 @@
 <head>
 <meta charset="UTF-8">
 
-<!-- CreateJS -->
 <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
-
-<!-- DIN ORIGINAL JS -->
 <script src="https://kim4690.github.io/BEWI-300/BygTek_300x250_mar26.js"></script>
 
 <style>
 body { margin:0; }
 
-#animation_container {
+canvas {
   width:100%;
   max-width:300px;
   aspect-ratio:300/250;
-  position:relative;
-}
-
-canvas {
-  width:100%;
-  height:100%;
   display:block;
   cursor:pointer;
 }
@@ -30,16 +21,13 @@ canvas {
 
 <body>
 
-<div id="animation_container">
-  <canvas id="canvas" width="300" height="250"></canvas>
-</div>
+<canvas id="canvas" width="300" height="250"></canvas>
 
 <script>
 var canvas = document.getElementById("canvas");
 var stage, exportRoot;
 
-// 🔥 DET HER ER DEN KORREKTE MÅDE (Adobe måde)
-function init() {
+AdobeAn.bootstrapCallback(function(){
 
   var comp = AdobeAn.getComposition("F76BD3534F92AF479E891204213A05E2");
   var lib = comp.getLibrary();
@@ -67,27 +55,18 @@ function init() {
     stage = new lib.Stage(canvas);
 
     stage.addChild(exportRoot);
-    stage.enableMouseOver();
 
     createjs.Ticker.framerate = lib.properties.fps;
     createjs.Ticker.addEventListener("tick", stage);
 
-    // 🔗 KLIK (HELE BANNER)
-    canvas.addEventListener("click", function(){
-      window.open(
-        "https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering",
-        "_blank"
-      );
-    });
+    canvas.onclick = function(){
+      window.open("https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering","_blank");
+    };
 
   });
 
   loader.loadManifest(lib.properties.manifest);
-}
 
-// 🔥 VIGTIGT: vent på Adobe bootstrap
-AdobeAn.bootstrapCallback(function(){
-  init();
 });
 </script>
 
