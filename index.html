@@ -30,27 +30,48 @@ canvas {
   cursor:pointer;
 }
 
-/* CTA */
-#cta-overlay {
+/* CTA container */
+#cta-container {
   position:absolute;
-  bottom:18px;
   left:22px;
+  bottom:18px;
 
-  width:84px;
-  height:24px;
-
-  border-radius:6px;
-
-  background:
-    url("https://kim4690.github.io/BEWI-300/BygTek_300x250_mar26_atlas_1.png") no-repeat,
-    #ffffff;
-
-  background-size:2000px 1333px;
-  background-position:-966px -1335px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
 
   opacity:0;
   transform:translateY(20px);
   transition:all 0.4s ease;
+}
+
+/* “Nysgerrig” tekst (øverste boks) */
+#cta-top {
+  width:140px;
+  height:24px;
+
+  background:url("https://kim4690.github.io/BEWI-300/BygTek_300x250_mar26_atlas_1.png") no-repeat;
+  background-size:2000px 1333px;
+  background-position:0px -1335px; /* text2 udsnit */
+
+}
+
+/* CTA knap */
+#cta-btn {
+  width:84px;
+  height:24px;
+
+  background:#ffffff;
+  border-radius:6px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-family:Arial, sans-serif;
+  font-size:11px;
+  font-weight:bold;
+  color:#000; /* 🔥 sort tekst */
 }
 </style>
 </head>
@@ -59,7 +80,12 @@ canvas {
 
 <div id="banner-wrapper">
   <canvas id="canvas" width="300" height="250"></canvas>
-  <div id="cta-overlay"></div>
+
+  <!-- CTA -->
+  <div id="cta-container">
+    <div id="cta-top"></div>
+    <div id="cta-btn">Læs mere</div>
+  </div>
 </div>
 
 <script>
@@ -102,8 +128,7 @@ function init() {
 
     createjs.Ticker.framerate = lib.properties.fps;
 
-    // 🔥 SYNK CTA MED FRAME (KORREKT!)
-    var cta = document.getElementById("cta-overlay");
+    var cta = document.getElementById("cta-container");
 
     createjs.Ticker.addEventListener("tick", function(){
 
@@ -111,8 +136,14 @@ function init() {
 
       var frame = exportRoot.currentFrame;
 
-      // 👉 CTA vises når den faktisk gør i animationen
-      if (frame > 65) {
+      // 🔥 RESET når animation starter forfra
+      if (frame < 5) {
+        cta.style.opacity = 0;
+        cta.style.transform = "translateY(20px)";
+      }
+
+      // 🔥 VIS CTA KUN TIL SIDST
+      if (frame > 140) {
         cta.style.opacity = 1;
         cta.style.transform = "translateY(0)";
       }
