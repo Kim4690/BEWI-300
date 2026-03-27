@@ -2,62 +2,101 @@
 <html lang="da">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- CreateJS -->
 <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
 
-<!-- 🔥 DEN HER MANGLER HOS DIG -->
+<!-- 🔥 AdobeAn SKAL eksistere før din JS -->
 <script>
 var AdobeAn = AdobeAn || {};
 </script>
 
+<!-- DIN ORIGINAL JS -->
 <script src="https://kim4690.github.io/BEWI-300/BygTek_300x250_mar26.js"></script>
 
 <style>
-body { margin:0; }
-canvas { display:block; }
+body {
+  margin:0;
+  padding:0;
+}
+
+/* RESPONSIV WRAPPER */
+#banner-wrapper {
+  width:100%;
+  max-width:300px;
+  aspect-ratio:300/250;
+}
+
+/* CANVAS */
+canvas {
+  width:100%;
+  height:100%;
+  display:block;
+  cursor:pointer;
+}
 </style>
 </head>
 
 <body>
 
-<canvas id="canvas" width="300" height="250"></canvas>
+<div id="banner-wrapper">
+  <canvas id="canvas" width="300" height="250"></canvas>
+</div>
 
 <script>
 var canvas = document.getElementById("canvas");
+var stage, exportRoot;
 
-var comp = AdobeAn.getComposition("F76BD3534F92AF479E891204213A05E2");
-var lib = comp.getLibrary();
-var loader = new createjs.LoadQueue(false);
+// 🔥 VENT på Adobe Animate er klar
+AdobeAn.bootstrapCallback(function(compId){
 
-loader.addEventListener("fileload", function(evt){
-  if (evt.item.type === "image") {
-    lib.images = lib.images || {};
-    lib.images[evt.item.id] = evt.result;
-  }
+  var comp = AdobeAn.getComposition(compId);
+  var lib = comp.getLibrary();
+  var loader = new createjs.LoadQueue(false);
+
+  loader.addEventListener("fileload", function(evt){
+    if (evt.item.type === "image") {
+      lib.images = lib.images || {};
+      lib.images[evt.item.id] = evt.result;
+    }
+  });
+
+  loader.addEventListener("complete", function(){
+
+    // 🔥 SPRITESHEET (VIGTIG)
+    var ss = comp.getSpriteSheet();
+    for (var i = 0; i < lib.ssMetadata.length; i++) {
+      ss[lib.ssMetadata[i].name] = new createjs.SpriteSheet({
+        images: [lib.images[lib.ssMetadata[i].name]],
+        frames: lib.ssMetadata[i].frames
+      });
+    }
+
+    exportRoot = new lib.Untitled3();
+    stage = new lib.Stage(canvas);
+
+    stage.addChild(exportRoot);
+
+    // 🔥 START ANIMATION
+    createjs.Ticker.framerate = lib.properties.fps;
+    createjs.Ticker.addEventListener("tick", stage);
+
+    exportRoot.gotoAndPlay(0);
+
+    // 🔥 KLIK
+    canvas.onclick = function(){
+      window.open(
+        "https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering",
+        "_blank"
+      );
+    };
+
+  });
+
+  loader.loadManifest(lib.properties.manifest);
+
 });
-
-loader.addEventListener("complete", function(){
-
-  var ss = comp.getSpriteSheet();
-
-  for (var i = 0; i < lib.ssMetadata.length; i++) {
-    ss[lib.ssMetadata[i].name] = new createjs.SpriteSheet({
-      images: [lib.images[lib.ssMetadata[i].name]],
-      frames: lib.ssMetadata[i].frames
-    });
-  }
-
-  var exportRoot = new lib.Untitled3();
-  var stage = new lib.Stage(canvas);
-
-  stage.addChild(exportRoot);
-
-  createjs.Ticker.framerate = lib.properties.fps;
-  createjs.Ticker.addEventListener("tick", stage);
-
-});
-
-loader.loadManifest(lib.properties.manifest);
 </script>
 
 </body>
