@@ -19,17 +19,37 @@ window.AdobeAn = window.AdobeAn || {};
 <style>
 body { margin:0; }
 
+/* WRAPPER */
 #banner-wrapper {
+  position: relative;
   width:100%;
   max-width:300px;
   aspect-ratio:300/250;
 }
 
+/* CANVAS */
 canvas {
   width:100%;
   height:100%;
   display:block;
   cursor:pointer;
+}
+
+/* 🔥 CTA (HTML layer – virker altid) */
+#cta-overlay {
+  position:absolute;
+  bottom:20px;
+  left:20px;
+
+  width:90px;
+  height:28px;
+
+  background:#ffffff;
+  border-radius:6px;
+
+  opacity:0;
+  transform:translateY(20px);
+  transition:all 0.4s ease;
 }
 </style>
 </head>
@@ -38,6 +58,9 @@ canvas {
 
 <div id="banner-wrapper">
   <canvas id="canvas" width="300" height="250"></canvas>
+
+  <!-- 🔥 CTA overlay -->
+  <div id="cta-overlay"></div>
 </div>
 
 <script>
@@ -64,7 +87,6 @@ function init() {
 
   loader.addEventListener("complete", function(){
 
-    // spritesheets
     var ss = comp.getSpriteSheet();
     for (var i = 0; i < lib.ssMetadata.length; i++) {
       ss[lib.ssMetadata[i].name] = new createjs.SpriteSheet({
@@ -73,27 +95,23 @@ function init() {
       });
     }
 
-    // 🔥 DET VIGTIGE (stage + root korrekt sted)
     var exportRoot = new lib.Untitled3();
     var stage = new lib.Stage(canvas);
 
     stage.addChild(exportRoot);
 
-    // 🔥 CTA BAGGRUND (REN & STABIL)
-    var ctaBg = new createjs.Shape();
-    ctaBg.graphics.beginFill("#ffffff").drawRoundRect(0,0,90,28,6);
-
-    ctaBg.x = 20;
-    ctaBg.y = 205;
-
-    // bag animation
-    stage.addChildAt(ctaBg, 0);
-
-    // start animation
     createjs.Ticker.framerate = lib.properties.fps;
     createjs.Ticker.addEventListener("tick", stage);
 
     exportRoot.gotoAndPlay(0);
+
+    // 🔥 VIS CTA (timing matcher animation)
+    var cta = document.getElementById("cta-overlay");
+
+    setTimeout(function(){
+      cta.style.opacity = 1;
+      cta.style.transform = "translateY(0)";
+    }, 2000);
 
     // klik
     canvas.onclick = function(){
