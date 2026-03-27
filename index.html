@@ -3,149 +3,92 @@
 <head>
 <meta charset="UTF-8">
 
+<!-- CreateJS -->
+<script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+
+<!-- DIN ORIGINAL JS -->
+<script src="https://kim4690.github.io/BEWI-300/BygTek_300x250_mar26.js"></script>
+
 <style>
 body { margin:0; }
 
-#banner {
+#animation_container {
   width:100%;
   max-width:300px;
   aspect-ratio:300/250;
   position:relative;
-  overflow:hidden;
-  font-family: Arial, sans-serif;
-  cursor:pointer;
 }
 
-/* BAGGRUND */
-#bg {
-  position:absolute;
+canvas {
   width:100%;
   height:100%;
-  background:url("https://kim4690.github.io/BEWI-300/BygTek_300x250_mar26_atlas_1.png") center/cover no-repeat;
-}
-
-/* BLÅ SHAPE */
-#shape {
-  position:absolute;
-  width:150%;
-  height:150%;
-  background:#26485F;
-  transform:rotate(20deg) scale(0);
-  top:-40%;
-  right:-40%;
-  opacity:0.9;
-  transition:transform 1s ease;
-}
-
-/* LOGO */
-#logo {
-  position:absolute;
-  top:10px;
-  right:10px;
-  font-weight:bold;
-  color:#fff;
-  font-size:14px;
-}
-
-/* TEKST */
-.text {
-  position:absolute;
-  left:15px;
-  right:15px;
-  color:#fff;
-  opacity:0;
-  transition:opacity 0.6s ease;
-}
-
-#text1 {
-  top:40px;
-  font-size:14px;
-}
-
-#text2 {
-  top:40px;
-  font-size:20px;
-  font-weight:bold;
-}
-
-/* CTA */
-#cta {
-  position:absolute;
-  bottom:15px;
-  left:15px;
-  background:#fff;
-  color:#000;
-  padding:6px 12px;
-  font-size:12px;
-  font-weight:bold;
-  opacity:0;
-  transform:translateY(20px);
-  transition:all 0.6s ease;
-}
-
-/* ANIMATION */
-.step0 #shape {
-  transform:rotate(20deg) scale(1);
-}
-
-.step1 #text1 { opacity:1; }
-
-.step2 #text1 { opacity:0; }
-
-.step3 #text2 { opacity:1; }
-
-.step1 #cta,
-.step3 #cta {
-  opacity:1;
-  transform:translateY(0);
+  display:block;
+  cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<div id="banner">
-
-  <div id="bg"></div>
-  <div id="shape"></div>
-
-  <div id="logo">BEWI</div>
-
-  <div id="text1" class="text">
-    Effektiv isolering
-  </div>
-
-  <div id="text2" class="text">
-    Tagisolering<br>
-    der sparer tid og energi
-  </div>
-
-  <div id="cta">Læs mere</div>
-
+<div id="animation_container">
+  <canvas id="canvas" width="300" height="250"></canvas>
 </div>
 
 <script>
-var banner = document.getElementById("banner");
+var canvas = document.getElementById("canvas");
+var stage, exportRoot;
 
-// shape
-setTimeout(()=>banner.classList.add("step0"), 200);
+// 🔥 DET HER ER DEN KORREKTE MÅDE (Adobe måde)
+function init() {
 
-// text1
-setTimeout(()=>banner.classList.add("step1"), 2000);
+  var comp = AdobeAn.getComposition("F76BD3534F92AF479E891204213A05E2");
+  var lib = comp.getLibrary();
+  var loader = new createjs.LoadQueue(false);
 
-// text1 ud
-setTimeout(()=>banner.classList.add("step2"), 4000);
+  loader.addEventListener("fileload", function(evt){
+    if (evt.item.type === "image") {
+      lib.images = lib.images || {};
+      lib.images[evt.item.id] = evt.result;
+    }
+  });
 
-// text2 ind
-setTimeout(()=>banner.classList.add("step3"), 5000);
+  loader.addEventListener("complete", function(){
 
-// klik
-banner.onclick = function(){
-  window.open(
-    "https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering",
-    "_blank"
-  );
-};
+    var ss = comp.getSpriteSheet();
+
+    for (var i = 0; i < lib.ssMetadata.length; i++) {
+      ss[lib.ssMetadata[i].name] = new createjs.SpriteSheet({
+        images: [lib.images[lib.ssMetadata[i].name]],
+        frames: lib.ssMetadata[i].frames
+      });
+    }
+
+    exportRoot = new lib.Untitled3();
+    stage = new lib.Stage(canvas);
+
+    stage.addChild(exportRoot);
+    stage.enableMouseOver();
+
+    createjs.Ticker.framerate = lib.properties.fps;
+    createjs.Ticker.addEventListener("tick", stage);
+
+    // 🔗 KLIK (HELE BANNER)
+    canvas.addEventListener("click", function(){
+      window.open(
+        "https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering",
+        "_blank"
+      );
+    });
+
+  });
+
+  loader.loadManifest(lib.properties.manifest);
+}
+
+// 🔥 VIGTIGT: vent på Adobe bootstrap
+AdobeAn.bootstrapCallback(function(){
+  init();
+});
 </script>
 
 </body>
