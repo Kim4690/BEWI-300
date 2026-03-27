@@ -7,13 +7,13 @@
 <!-- CreateJS -->
 <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
 
-<!-- 🔥 global init -->
+<!-- global init -->
 <script>
 window.createjs = window.createjs || {};
 window.AdobeAn = window.AdobeAn || {};
 </script>
 
-<!-- DIN JS -->
+<!-- ORIGINAL JS -->
 <script src="https://kim4690.github.io/BEWI-300/BygTek_300x250_mar26.js"></script>
 
 <style>
@@ -35,17 +35,25 @@ canvas {
   cursor:pointer;
 }
 
-/* 🔥 CTA (HTML layer – virker altid) */
+/* ✅ CTA (KORREKT VERSION) */
 #cta-overlay {
   position:absolute;
-  bottom:20px;
-  left:20px;
 
-  width:90px;
-  height:28px;
+  bottom:18px;
+  left:22px;
 
-  background:#ffffff;
+  width:84px;
+  height:24px;
+
   border-radius:6px;
+
+  /* 🔥 hvid baggrund + tekst fra sprite */
+  background:
+    url("https://kim4690.github.io/BEWI-300/BygTek_300x250_mar26_atlas_1.png") no-repeat,
+    #ffffff;
+
+  background-size:2000px 1333px;
+  background-position:-966px -1335px;
 
   opacity:0;
   transform:translateY(20px);
@@ -59,7 +67,7 @@ canvas {
 <div id="banner-wrapper">
   <canvas id="canvas" width="300" height="250"></canvas>
 
-  <!-- 🔥 CTA overlay -->
+  <!-- CTA -->
   <div id="cta-overlay"></div>
 </div>
 
@@ -88,6 +96,7 @@ function init() {
   loader.addEventListener("complete", function(){
 
     var ss = comp.getSpriteSheet();
+
     for (var i = 0; i < lib.ssMetadata.length; i++) {
       ss[lib.ssMetadata[i].name] = new createjs.SpriteSheet({
         images: [lib.images[lib.ssMetadata[i].name]],
@@ -105,13 +114,13 @@ function init() {
 
     exportRoot.gotoAndPlay(0);
 
-    // 🔥 VIS CTA (timing matcher animation)
+    // 🔥 CTA timing (matcher animation)
     var cta = document.getElementById("cta-overlay");
 
     setTimeout(function(){
       cta.style.opacity = 1;
       cta.style.transform = "translateY(0)";
-    }, 2000);
+    }, 2200);
 
     // klik
     canvas.onclick = function(){
