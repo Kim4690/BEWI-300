@@ -81,11 +81,36 @@ function init() {
       });
     }
 
-    // stage + root
-    var exportRoot = new lib.Untitled3();
-    var stage = new lib.Stage(canvas);
+stage.addChild(exportRoot);
 
-    stage.addChild(exportRoot);
+// 🔥 hvid CTA baggrund
+var ctaBg = new createjs.Shape();
+ctaBg.graphics.beginFill("#ffffff").drawRoundRect(0,0,85,25,4);
+
+ctaBg.x = 20;
+ctaBg.y = 210;
+
+// tilføj EFTER exportRoot
+stage.addChild(ctaBg);
+
+// 🔥 læg den LIGE UNDER CTA (ikke helt bagved)
+stage.setChildIndex(ctaBg, stage.getNumChildren() - 2);
+
+ctaBg.x = 20;
+ctaBg.y = 210;
+
+// tilføj
+stage.addChild(ctaBg);
+
+// 🔥 sørg for den ligger BAG animationen
+stage.setChildIndex(ctaBg, 0);
+
+// position matcher animation
+ctaBg.x = 20;
+ctaBg.y = 210;
+
+stage.addChild(ctaBg);
+stage.setChildIndex(ctaBg, stage.getNumChildren()-1);
 
     // animation start
     createjs.Ticker.framerate = lib.properties.fps;
