@@ -2,14 +2,10 @@
 <html lang="da">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body {
-  margin:0;
-}
+body { margin:0; }
 
-/* CONTAINER */
 #banner {
   width:100%;
   max-width:300px;
@@ -28,12 +24,17 @@ body {
   background:url("https://kim4690.github.io/BEWI-300/BygTek_300x250_mar26_atlas_1.png") center/cover no-repeat;
 }
 
-/* OVERLAY */
-#overlay {
+/* BLÅ SHAPE */
+#shape {
   position:absolute;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.25);
+  width:150%;
+  height:150%;
+  background:#26485F;
+  transform:rotate(20deg) scale(0);
+  top:-40%;
+  right:-40%;
+  opacity:0.9;
+  transition:transform 1s ease;
 }
 
 /* LOGO */
@@ -41,12 +42,12 @@ body {
   position:absolute;
   top:10px;
   right:10px;
-  color:#fff;
   font-weight:bold;
+  color:#fff;
   font-size:14px;
 }
 
-/* TEKSTER */
+/* TEKST */
 .text {
   position:absolute;
   left:15px;
@@ -56,18 +57,15 @@ body {
   transition:opacity 0.6s ease;
 }
 
-/* INTRO */
 #text1 {
   top:40px;
   font-size:14px;
 }
 
-/* HOVEDBUDSKAB */
 #text2 {
   top:40px;
   font-size:20px;
   font-weight:bold;
-  line-height:1.2;
 }
 
 /* CTA */
@@ -86,6 +84,10 @@ body {
 }
 
 /* ANIMATION */
+.step0 #shape {
+  transform:rotate(20deg) scale(1);
+}
+
 .step1 #text1 { opacity:1; }
 
 .step2 #text1 { opacity:0; }
@@ -105,7 +107,7 @@ body {
 <div id="banner">
 
   <div id="bg"></div>
-  <div id="overlay"></div>
+  <div id="shape"></div>
 
   <div id="logo">BEWI</div>
 
@@ -125,18 +127,25 @@ body {
 <script>
 var banner = document.getElementById("banner");
 
-// Step timing (matcher din originale .js nogenlunde)
+// shape
+setTimeout(()=>banner.classList.add("step0"), 200);
+
+// text1
 setTimeout(()=>banner.classList.add("step1"), 2000);
+
+// text1 ud
 setTimeout(()=>banner.classList.add("step2"), 4000);
+
+// text2 ind
 setTimeout(()=>banner.classList.add("step3"), 5000);
 
 // klik
-banner.addEventListener("click", function(){
+banner.onclick = function(){
   window.open(
     "https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering",
     "_blank"
   );
-});
+};
 </script>
 
 </body>
