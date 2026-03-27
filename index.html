@@ -7,13 +7,13 @@
 body { margin:0; }
 
 #banner {
-  width:300px;
-  height:250px;
+  width:100%;
+  max-width:300px;
+  aspect-ratio:300/250;
   position:relative;
   overflow:hidden;
   font-family: Arial, sans-serif;
   cursor:pointer;
-  background:#000;
 }
 
 /* BAGGRUND */
@@ -22,31 +22,38 @@ body { margin:0; }
   width:100%;
   height:100%;
   background:url("https://kim4690.github.io/BEWI-300/BygTek_300x250_mar26_atlas_1.png") center/cover no-repeat;
-  transform: scale(1.1);
-  transition: transform 3s ease;
 }
 
-/* DARK OVERLAY */
+/* OVERLAY (for læsbarhed) */
 #overlay {
   position:absolute;
   width:100%;
   height:100%;
-  background:rgba(0,0,0,0.3);
+  background:rgba(0,0,0,0.25);
 }
 
-/* TEKST */
-#text {
+/* LOGO */
+#logo {
   position:absolute;
-  bottom:60px;
+  top:10px;
+  right:10px;
+  font-weight:bold;
+  color:#fff;
+  font-size:14px;
+}
+
+/* TEKSTER */
+.text {
+  position:absolute;
   left:15px;
   right:15px;
   color:#fff;
-  font-size:16px;
-  font-weight:bold;
   opacity:0;
-  transform: translateY(20px);
-  transition: all 0.6s ease;
+  transition:opacity 0.6s;
 }
+
+#text1 { top:40px; font-size:16px; }
+#text2 { top:40px; font-size:16px; }
 
 /* CTA */
 #cta {
@@ -59,25 +66,19 @@ body { margin:0; }
   font-size:12px;
   font-weight:bold;
   opacity:0;
-  transform: translateY(10px);
-  transition: all 0.6s ease;
+  transform:translateY(20px);
+  transition:all 0.6s;
 }
 
 /* ANIMATION */
-.show #bg {
-  transform: scale(1);
-}
+.step1 #text1 { opacity:1; }
+.step2 #text1 { opacity:0; }
+.step3 #text2 { opacity:1; }
 
-.show #text {
+.step1 #cta,
+.step3 #cta {
   opacity:1;
-  transform: translateY(0);
-  transition-delay:0.5s;
-}
-
-.show #cta {
-  opacity:1;
-  transform: translateY(0);
-  transition-delay:0.9s;
+  transform:translateY(0);
 }
 </style>
 </head>
@@ -85,150 +86,43 @@ body { margin:0; }
 <body>
 
 <div id="banner">
+
   <div id="bg"></div>
   <div id="overlay"></div>
 
-  <div id="text">
-    Effektiv tagisolering
+  <div id="logo">BEWI</div>
+
+  <div id="text1" class="text">
+    Effektiv isolering
   </div>
 
-  <div id="cta">
-    Læs mere
+  <div id="text2" class="text">
+    Spar tid og energi
   </div>
+
+  <div id="cta">Læs mere</div>
+
 </div>
 
 <script>
 var banner = document.getElementById("banner");
 
-// start animation
-setTimeout(function(){
-  banner.classList.add("show");
-}, 200);
+// step 1
+setTimeout(()=>banner.classList.add("step1"), 2000);
+
+// step 2
+setTimeout(()=>banner.classList.add("step2"), 4000);
+
+// step 3
+setTimeout(()=>banner.classList.add("step3"), 5000);
 
 // klik
-banner.addEventListener("click", function(){
+banner.onclick = function(){
   window.open(
     "https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering",
     "_blank"
   );
-});
-</script>
-
-</body>
-</html><!DOCTYPE html>
-<html lang="da">
-<head>
-<meta charset="UTF-8">
-
-<style>
-body { margin:0; }
-
-#banner {
-  width:300px;
-  height:250px;
-  position:relative;
-  overflow:hidden;
-  font-family: Arial, sans-serif;
-  cursor:pointer;
-  background:#000;
-}
-
-/* BAGGRUND */
-#bg {
-  position:absolute;
-  width:100%;
-  height:100%;
-  background:url("https://kim4690.github.io/BEWI-300/BygTek_300x250_mar26_atlas_1.png") center/cover no-repeat;
-  transform: scale(1.1);
-  transition: transform 3s ease;
-}
-
-/* DARK OVERLAY */
-#overlay {
-  position:absolute;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.3);
-}
-
-/* TEKST */
-#text {
-  position:absolute;
-  bottom:60px;
-  left:15px;
-  right:15px;
-  color:#fff;
-  font-size:16px;
-  font-weight:bold;
-  opacity:0;
-  transform: translateY(20px);
-  transition: all 0.6s ease;
-}
-
-/* CTA */
-#cta {
-  position:absolute;
-  bottom:15px;
-  left:15px;
-  background:#fff;
-  color:#000;
-  padding:6px 12px;
-  font-size:12px;
-  font-weight:bold;
-  opacity:0;
-  transform: translateY(10px);
-  transition: all 0.6s ease;
-}
-
-/* ANIMATION */
-.show #bg {
-  transform: scale(1);
-}
-
-.show #text {
-  opacity:1;
-  transform: translateY(0);
-  transition-delay:0.5s;
-}
-
-.show #cta {
-  opacity:1;
-  transform: translateY(0);
-  transition-delay:0.9s;
-}
-</style>
-</head>
-
-<body>
-
-<div id="banner">
-  <div id="bg"></div>
-  <div id="overlay"></div>
-
-  <div id="text">
-    Effektiv tagisolering
-  </div>
-
-  <div id="cta">
-    Læs mere
-  </div>
-</div>
-
-<script>
-var banner = document.getElementById("banner");
-
-// start animation
-setTimeout(function(){
-  banner.classList.add("show");
-}, 200);
-
-// klik
-banner.addEventListener("click", function(){
-  window.open(
-    "https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering",
-    "_blank"
-  );
-});
+};
 </script>
 
 </body>
