@@ -2,10 +2,14 @@
 <html lang="da">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body { margin:0; }
+body {
+  margin:0;
+}
 
+/* CONTAINER */
 #banner {
   width:100%;
   max-width:300px;
@@ -24,7 +28,7 @@ body { margin:0; }
   background:url("https://kim4690.github.io/BEWI-300/BygTek_300x250_mar26_atlas_1.png") center/cover no-repeat;
 }
 
-/* OVERLAY (for læsbarhed) */
+/* OVERLAY */
 #overlay {
   position:absolute;
   width:100%;
@@ -37,8 +41,8 @@ body { margin:0; }
   position:absolute;
   top:10px;
   right:10px;
-  font-weight:bold;
   color:#fff;
+  font-weight:bold;
   font-size:14px;
 }
 
@@ -49,11 +53,22 @@ body { margin:0; }
   right:15px;
   color:#fff;
   opacity:0;
-  transition:opacity 0.6s;
+  transition:opacity 0.6s ease;
 }
 
-#text1 { top:40px; font-size:16px; }
-#text2 { top:40px; font-size:16px; }
+/* INTRO */
+#text1 {
+  top:40px;
+  font-size:14px;
+}
+
+/* HOVEDBUDSKAB */
+#text2 {
+  top:40px;
+  font-size:20px;
+  font-weight:bold;
+  line-height:1.2;
+}
 
 /* CTA */
 #cta {
@@ -67,12 +82,14 @@ body { margin:0; }
   font-weight:bold;
   opacity:0;
   transform:translateY(20px);
-  transition:all 0.6s;
+  transition:all 0.6s ease;
 }
 
 /* ANIMATION */
 .step1 #text1 { opacity:1; }
+
 .step2 #text1 { opacity:0; }
+
 .step3 #text2 { opacity:1; }
 
 .step1 #cta,
@@ -93,12 +110,13 @@ body { margin:0; }
   <div id="logo">BEWI</div>
 
   <div id="text1" class="text">
-  Effektiv isolering til byggeriet
-</div>
+    Effektiv isolering
+  </div>
 
-<div id="text2" class="text">
-  Tagisolering der sparer tid og energi
-</div>
+  <div id="text2" class="text">
+    Tagisolering<br>
+    der sparer tid og energi
+  </div>
 
   <div id="cta">Læs mere</div>
 
@@ -107,22 +125,18 @@ body { margin:0; }
 <script>
 var banner = document.getElementById("banner");
 
-// step 1
+// Step timing (matcher din originale .js nogenlunde)
 setTimeout(()=>banner.classList.add("step1"), 2000);
-
-// step 2
 setTimeout(()=>banner.classList.add("step2"), 4000);
-
-// step 3
 setTimeout(()=>banner.classList.add("step3"), 5000);
 
 // klik
-banner.onclick = function(){
+banner.addEventListener("click", function(){
   window.open(
     "https://bewi.com/loesninger-brancher/tag?lang=da&utm_source=html5&utm_medium=fp&utm_campaign=Tagisolering",
     "_blank"
   );
-};
+});
 </script>
 
 </body>
