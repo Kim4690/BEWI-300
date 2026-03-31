@@ -22,19 +22,19 @@ body {
 
 /* centrer banner korrekt */
 #banner-wrapper {
-  position: relative;   /* 🔥 vigtig for CTA */
-  margin: 0 auto;
+  position: relative;
+  width:100%;
+  max-width:300px;
+  aspect-ratio:300/250;
 
-  width: 100%;
-  max-width: 300px;
-
-  aspect-ratio: 300 / 250; /* 🔥 sikrer korrekt højde */
+  margin: 0 auto; /* stadig ok */
 }
 
 canvas {
-  width:100%;
-  height:auto;   /* 🔥 FIX */
   display:block;
+  margin: 0 auto;   /* 🔥 DET HER ER FIXET */
+  width:100%;
+  height:auto;
   cursor:pointer;
 }
 
